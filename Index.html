@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7amo&Mo7a's Group Chat</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+  animation: fadeIn 0.5s ease;
+}
+.page.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 6s linear infinite;
+  text-align: center;
+  margin-bottom: 20px;
+}
+@keyframes rainbow { to { background-position: 200% center; } }
+
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
+}
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  outline: none;
+  transition: border 0.3s;
+}
+.input-group label {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  color: #aaa;
+  transition: 0.3s;
+  pointer-events: none;
+  background: rgba(0,0,0,0.5);
+  padding: 0 6px;
+  border-radius: 4px;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 14px;
+  color: #00ffcc;
+}
+.message {
+  margin-top: 5px;
+  font-size: 14px;
+  min-height: 20px;
+  transition: 0.3s;
+}
+
+button {
+  padding: 12px 24px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  background: #0051ff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background: #003bb5; }
+
+.exit {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  font-size: 22px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.output-box {
+  margin-top: 20px;
+  padding: 12px;
+  border: 2px dashed #00ffcc;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.output-box:hover { background: rgba(255,255,255,0.2); }
+
+.circle {
+  margin: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 8px solid rgba(255,255,255,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  color: #00ffcc;
+}
+
+.banner {
+  margin-top: 15px;
+  padding: 8px;
+  background: rgba(255,0,0,0.7);
+  border-radius: 8px;
+  animation: blink 2s infinite;
+  font-size: 14px;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 13px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>  <!-- Page 1: Home -->  <div class="page active" id="home">
+    <h1>7amo&Mo7a's Group Chat</h1>
+    <button onclick="goTo('form')">Join!!</button>
+    <button onclick="goTo('feedback')">Feedback</button>
+    <button onclick="goTo('rules')">Rules</button>
+    <div class="footer">Made by 7amada🇪🇬&Mo7a🇪🇬 scripts by chatgpt💀</div>
+  </div>  <!-- Page 2: Form -->  <div class="page" id="form">
+    <button class="exit" onclick="goTo('home')">❌</button>
+    <h2>Enter your details</h2>
+    <div class="input-group">
+      <input type="text" id="name" placeholder=" " oninput="validateName()">
+      <label for="name">First Name</label>
+      <div class="message" id="nameMsg"></div>
+    </div>
+    <div class="input-group">
+      <input type="number" id="age" placeholder=" " oninput="validateAge()">
+      <label for="age">Age</label>
+      <div class="message" id="ageMsg"></div>
+    </div>
+    <div class="output-box" id="introMsg" onclick="copyIntro()"></div>
+    <button onclick="startCountdown()">Get Your Code</button>
+    <div class="circle" id="circle" style="display:none;">30</div>
+  </div>  <!-- Page 3: Feedback -->  <div class="page" id="feedback">
+    <button class="exit" onclick="goTo('home')">❌</button>
+    <h2>The owners' numbers</h2>
+    <button onclick="window.open('https://wa.me/96598724867','_blank')">👑Mohamed</button>
+    <button onclick="window.open('https://wa.me/qr/OWNTXVSJJSRSL1','_blank')">👑Mostafa</button>
+    <div class="banner">⚠️ Warning: Only text the owners if there’s violence, fighting, or rule-breaking!</div>
+  </div>  <!-- Page 4: Rules -->  <div class="page" id="rules">
+    <button class="exit" onclick="goTo('home')">❌</button>
+    <h2>Group Rules</h2>
+    <pre style="text-align:left; font-size:14px; white-space:pre-wrap;">
+*Kick-able rules:*
+1. No swearing
+2. No spamming
+3. No fighting (both kicked)
+4. Don’t disrespect admins/owners
+5. No inappropriate mediaPermanent Ban rules:
+
+1. No Israel people allowed
+
+
+2. No LGBTQ+ people allowed (aroace exception)
+
+
+
+Notice:
+
+Admins must follow rules
+
+3 warnings only before kick
+
+
+HELLO THERE AND WELCOME TO OUR GROUP! 🥳 Make friends, invite friends, and enjoy. Follow @7amoeditz037 & @YOURBOYMOSTAFA If there are fights or bullying contact admins. Enjoy and have fun!! </pre> <div class="footer">Made by 7amada🇪🇬&Mo7a🇪🇬 scripts by chatgpt💀</div>
+
+  </div><script>
+  function goTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+  }
+
+  function validateName() {
+    let name = document.getElementById("name").value;
+    let msg = document.getElementById("nameMsg");
+    let regex = /^[A-Z][a-z]{1,}$/;
+    if (!name) { msg.textContent = ""; document.getElementById("name").style.borderColor = "#ccc"; return; }
+    if (regex.test(name)) {
+      msg.textContent = `Thank you ${name}`;
+      msg.style.color = "#0f0";
+      document.getElementById("name").style.borderColor = "#0f0";
+    } else {
+      msg.textContent = "Wrong, put your real name!!";
+      msg.style.color = "#f00";
+      document.getElementById("name").style.borderColor = "#f00";
+    }
+    updateIntro();
+  }
+
+  function validateAge() {
+    let age = document.getElementById("age").value;
+    let msg = document.getElementById("ageMsg");
+    if (!age) { msg.textContent = ""; document.getElementById("age").style.borderColor = "#ccc"; return; }
+    if (age > 0 && age <= 120) {
+      msg.textContent = `Valid age: ${age}`;
+      msg.style.color = "#0f0";
+      document.getElementById("age").style.borderColor = "#0f0";
+    } else {
+      msg.textContent = "Please enter a valid age.";
+      msg.style.color = "#f00";
+      document.getElementById("age").style.borderColor = "#f00";
+    }
+    updateIntro();
+  }
+
+  function updateIntro() {
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let box = document.getElementById("introMsg");
+    if (name && age && age > 0 && age <= 120) {
+      box.textContent = `Hello👋 I am ${name} and I am ${age} years old. I just wanted to join, have fun and make some friends.`;
+    } else {
+      box.textContent = "";
+    }
+  }
+
+  function copyIntro() {
+    let text = document.getElementById("introMsg").textContent;
+    if (text) {
+      navigator.clipboard.writeText(text);
+      alert("Copied: " + text);
+    }
+  }
+
+  function startCountdown() {
+    let circle = document.getElementById("circle");
+    let count = 30;
+    circle.style.display = "flex";
+    circle.textContent = count;
+    let interval = setInterval(() => {
+      count--;
+      circle.textContent = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        circle.textContent = "Code: ABC123";
+        circle.onclick = () => {
+          navigator.clipboard.writeText("ABC123");
+          window.open("https://chat.whatsapp.com/IOXkN7QB8HHDYWWvm9jAmN?mode=ac_t", "_blank");
+          setTimeout(()=>{
+            window.open("https://chat.whatsapp.com/BcZWVfo8ljMBHXM3GYLEez?mode=ac_t", "_blank");
+          },2000);
+          setTimeout(()=>{
+            window.open("https://chat.whatsapp.com/GarswBMIAaHLJyWoZVO0kv?mode=ac_t", "_blank");
+          },4000);
+        }
+      }
+    }, 1000);
+  }
+</script></body>
+</html>
